@@ -18,8 +18,19 @@ app.get("/", (req, res) => {
 
 require("./app/routes/user.routes.js")(app);
 
+const db = require('./app/models');
+db.sequelize.sync()
+  .then(() => {
+    console.log("database connected.")
+  })
+  .catch(error => {
+    console.log("database connect fail", error)
+  })
+
+
 // set port, listen for requests
 const PORT = process.env.PORT || 3009;
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}.`);
 });
+
